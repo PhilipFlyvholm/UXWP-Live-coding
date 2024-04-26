@@ -19,7 +19,7 @@ app.get("/", (req, res) => {
 
 app.get("/tweets", (req, res) => {
   console.log("/Tweets called");
-  const result = tweetsDb.tweets;
+  const result = tweetsDb.tweets.map((tweet, i) => { tweet.id = i; return tweet });
   res.status(200).send(result);
 });
 
@@ -44,6 +44,7 @@ app.post("/tweet", (req, res) => {
       Math.random() * 1000
     )}`,
     created_at: new Date().toISOString(),
+    id: tweetsDb.tweets.length
   };
 
   tweetsDb.tweets.unshift(newTweet);
